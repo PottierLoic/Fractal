@@ -11,14 +11,14 @@ import matplotlib.animation as animation
 
 # CONSTANTS
 DELAY = 1
-MAX_ITER = 15
+MAX_ITER = 100
 
 ANIMATED = False
 SAVE = True
 
 xRange=[-2, 2]
 yRange=[-2, 2]
-precision = 0.0005
+precision = 0.001
 
 xLength = int((xRange[1] - xRange[0]) / precision)
 yLength = int((yRange[1] - yRange[0]) / precision)
