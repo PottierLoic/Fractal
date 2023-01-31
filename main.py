@@ -18,7 +18,7 @@ SAVE = True
 
 xRange=[-2, 2]
 yRange=[-2, 2]
-precision = 0.001
+precision = 0.01
 
 xLength = int((xRange[1] - xRange[0]) / precision)
 yLength = int((yRange[1] - yRange[0]) / precision)
@@ -66,7 +66,7 @@ def saveImage():
         for x in range(xLength):
             data.putpixel((x, y), (frac[y][x]*16, frac[y][x]*16, frac[y][x]*16))
 
-    data.save("./fractal.png")
+    data.save("./fractals/new.png")
     print("created fractal.png")
 
 # update the fractal with a new real and imaginary value
