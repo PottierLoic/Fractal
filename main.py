@@ -54,7 +54,6 @@ def fractal() -> np.ndarray:
                 if abs(z)>2:
                     frac[y+int(yLength/2)][x+int(xLength/2)]=i
                     break
-    
     return frac
 
 # tranform the fractal array into an image and save it in the current directory
@@ -98,4 +97,3 @@ if __name__ == "__main__":
         plt.show()
 
     plt.show()
-    
