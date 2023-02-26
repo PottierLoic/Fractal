@@ -1,1 +1,0 @@
-mandlebrot.h 

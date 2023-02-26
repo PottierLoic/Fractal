@@ -13,8 +13,9 @@ import matplotlib.animation as animation
 DELAY = 1
 MAX_ITER = 100
 
-ANIMATED = False
 SAVE = True
+
+formula = "z * z + c"
 
 xRange=[-2, 2]
 yRange=[-2, 2]
@@ -33,24 +34,20 @@ print(xLength, yLength)
 print(xStart, xEnd)
 print(yStart, yEnd)
 
-real = 1
-im = 1
-
 def fractal() -> np.ndarray:
     # create a array filled with 0
     frac=np.zeros((yLength, xLength), dtype=int)
 
     # create a fractal
     for y in range(yStart, yEnd):
-        yy = y*precision
+        
         for x in range(xStart, xEnd):
+            yy = y*precision
             xx = x*precision
-            cx = xx*real
-            cy = yy*im
-            c=complex(cx, cy)
+            c=complex(xx, yy)
             z=0
             for i in range(MAX_ITER):
-                z=z*z+c
+                z=eval(formula)
                 if abs(z)>2:
                     frac[y+int(yLength/2)][x+int(xLength/2)]=i
                     break
@@ -85,15 +82,10 @@ if __name__ == "__main__":
     if SAVE:
         saveImage()
 
-    if ANIMATED:
-        fig, ax = plt.subplots()
-        img = ax.imshow(frac, cmap=mpl.colormaps['inferno'])
-        ani = animation.FuncAnimation(fig, update, fargs=(img, ), frames=10, interval=DELAY)
-    else:
-        plt.rcParams["figure.autolayout"] = True
-        manager = plt.get_current_fig_manager()
-        manager.full_screen_toggle()
-        plt.imshow(frac, cmap=mpl.colormaps['inferno'])
-        plt.show()
+    plt.rcParams["figure.autolayout"] = True
+    manager = plt.get_current_fig_manager()
+    manager.full_screen_toggle()
+    plt.imshow(frac, cmap=mpl.colormaps['inferno'])
+    plt.show()
 
     plt.show()
