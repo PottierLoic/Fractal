@@ -1,9 +1,12 @@
-rgbCode = [[4, 4, 73], [0, 7, 100], [12, 44, 138], [24, 82, 177], [57, 125, 209], [134, 181, 229], [211, 236, 248], [241, 233, 191], [248, 201, 95], [255, 170, 0], [204, 128, 0], [153, 87, 0], [106, 52, 3], [66, 30, 15], [25, 7, 26], [9, 1, 47]]
+rgbCode = [[0, 0, 0], [0, 255, 255], [102, 0, 204], [128, 255, 0], [0, 0, 153],
+           [255, 0, 0], [255, 51, 255], [153, 153, 0], [153, 255, 204], [160, 160, 160], [255, 128, 0], [0, 102, 102]]
 
 
-# generate a new list of colors
-# for every color in the list, generate a new color bewtween it and the next color that is the average of the two
-# repeat this process for the new color and the next color
+# generate a new list of color by adding a new color between each color of the list
+# the new color is the average of the two colors it is between in the list
+# the new list is 2 times the length of the original list
+# do the average between the last and first color in the list too 
+
 def generateNewColors(rgbCode):
     newColors = []
     for i in range(len(rgbCode)):
@@ -14,7 +17,7 @@ def generateNewColors(rgbCode):
             newColors.append(averageColor(rgbCode[i], rgbCode[i + 1]))
     return newColors
 
-# find the average of two colors, must be a int
+# find the average of two colors
 def averageColor(color1, color2):
     newColor = []
     for i in range(len(color1)):
@@ -24,5 +27,8 @@ def averageColor(color1, color2):
 test = generateNewColors(rgbCode)
 test = generateNewColors(test)
 test = generateNewColors(test)
+test = generateNewColors(test)
+test = generateNewColors(test)
+
 
 print(test)
