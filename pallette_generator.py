@@ -1,5 +1,4 @@
-rgbCode = [[255, 255, 255], [224, 224, 224], [192, 192, 192], [160, 160, 160], [128, 128, 128], [96, 96, 96], [64, 64, 64], [32, 32, 32], [0, 0, 0], [32, 32, 32], [64, 64, 64], [96, 96, 96], [128, 128, 128], [160, 160, 160], [192, 192, 192], [224, 224, 224], [255, 255, 255]]
-
+rgbCode = [[255, 255, 255], [255, 255, 0], [255, 0, 0], [255, 255, 255]]
 
 # generate a new list of color by adding a new color between each color of the list
 # the new color is the average of the two colors it is between in the list
@@ -28,6 +27,9 @@ test = generateNewColors(test)
 test = generateNewColors(test)
 test = generateNewColors(test)
 test = generateNewColors(test)
+test = generateNewColors(test)
+test = generateNewColors(test)
+
 
 
 print(test)
