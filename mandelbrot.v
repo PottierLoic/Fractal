@@ -128,7 +128,7 @@ fn (mut state AppState) worker(id int, input chan MandelChunk, ready chan bool) 
 			x0 = chunk.cview.x_min
 			for x_pixel := 0; x_pixel < pwidth; x_pixel++ {
 				x0 += xscale
-				x, y = x0, y0
+				x, y = 0.0, 0.0
 				for iter = 0; iter < state.max_iter; iter++ {
 					x, y = x * x - y * y + x0, 2 * x * y + y0
 					if x * x + y * y > 500 {

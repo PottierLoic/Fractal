@@ -7,6 +7,9 @@ import math
 const pwidth = 1920
 const pheight = 1080
 
+const real_part = 0.285
+const imag_part = 0.01
+
 const max_iterations = 200
 
 const chunk_height = 2
@@ -108,18 +111,23 @@ fn (mut state AppState) worker(id int, input chan MandelChunk, ready chan bool) 
 		yscale := chunk.cview.height() / pheight
 		xscale := chunk.cview.width() / pwidth
 		mut iter := 0.0
-		mut x := chunk.cview.x_min
-		mut y := chunk.ymin * yscale + chunk.cview.y_min
-		mut y0 := 0.285
-		mut x0 := 0.01
+		mut x := chunk.ymin * yscale + chunk.cview.y_min
+		mut y := chunk.cview.x_min
+		mut cx := real_part
+		mut cy := imag_part
+		mut tempx := x
+		mut tempy := y
 		for y_pixel := chunk.ymin; y_pixel < chunk.ymax && y_pixel < pheight; y_pixel++ {
 			yrow := unsafe { &state.npixels[int(y_pixel * pwidth)] }
-			y += yscale
+			y = tempy + yscale
+			tempy = y
+			x = chunk.cview.x_min
 			for x_pixel := 0; x_pixel < pwidth; x_pixel++ {
-				x += xscale
+				x = tempx + xscale
+				tempx = x
 				for iter = 0; iter < state.max_iter; iter++ {
-					x, y = x * x - y * y + x0, 2 * x * y + y0
-					if x * x + y * y > 100 {
+					x, y = x * x - y * y + cx, 2 * x * y + cy
+					if x * x + y * y > 500 {
 						break
 					}
 				}
