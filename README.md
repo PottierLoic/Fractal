@@ -2,7 +2,7 @@
 
 This is a simple Mandelbrot fractal explorer written in V.  
 
-It uses Yuyi98's base code which can be found [here](https://github.com/vlang/v/blob/master/examples/gg/mandelbrot.v).  
+It uses v mandelbrot example base code which can be found [here](https://github.com/vlang/v/blob/master/examples/gg/mandelbrot.v).  
 
 Coloring part is achieved by using linear interpolation on a color palette.  
 
