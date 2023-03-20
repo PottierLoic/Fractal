@@ -1,5 +1,5 @@
-const rgb_code = [[255, 255, 255], [255, 255, 0], [255, 0, 0], [255, 255, 255]]
-const iter = 1
+const rgb_code = [[102, 178, 255], [0, 255, 128], [255, 255, 102], [204, 229, 255]]
+const iter = 6
 
 // add the average of each pair of color to the list between them
 fn generate_new_steps(list [][]int) [][]int {
