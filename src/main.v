@@ -129,6 +129,17 @@ fn frame(mut app App) {
 	if auto_zoom == true {
 		app.zoom(2 - auto_zoom_factor)
 	}
+	if app.fractal_type == 'julia' {
+		if auto_incr_imag == true {
+			app.imag_part += auto_incr_factor
+			app.changed = true
+		}
+		if auto_incr_real == true {
+			app.imag_part += auto_incr_factor
+			app.changed = true
+		}
+	}
+	
 	app.draw()
 	app.gg.end()
 }
@@ -201,6 +212,9 @@ fn keydown(code gg.KeyCode, mod gg.Modifier, mut app App) {
 			if app.color_palette >= palettes.len { app.color_palette = 0 }
 			app.palette = palettes[app.color_palette]
 			app.changed = true
+		}
+		.escape {
+			app.gg.quit()
 		}
 		else {}
 	}
