@@ -1,7 +1,7 @@
 import math
 import gx
 
-fn (mut app App) mandelbrot(id int, input chan Chunk, ready chan bool) {
+fn (mut app App) burning_ship(id int, input chan Chunk, ready chan bool) {
 	for {
 		chunk := <-input or { break }
 		yscale := chunk.cview.height() / pheight
@@ -19,7 +19,8 @@ fn (mut app App) mandelbrot(id int, input chan Chunk, ready chan bool) {
 				x0 += xscale
 				x, y = 0.0, 0.0
 				for iter = 0; iter < app.max_iter; iter++ {
-					x, y = x * x - y * y + x0, 2 * x * y + y0
+					x = x * x - y * y + x0
+					y = math.abs(2 * x * y + y0)
 					if x * x + y * y > 100 {
 						break
 					}

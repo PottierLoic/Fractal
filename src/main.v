@@ -55,6 +55,7 @@ fn (mut app App) update() {
 		match app.fractal_type {
 			'mandelbrot' { threads << spawn app.mandelbrot(t, chunk_channel, chunk_ready_channel) }
 			'julia' { threads << spawn app.julia(t, chunk_channel, chunk_ready_channel) }
+			'burning_ship' { threads << spawn app.burning_ship(t, chunk_channel, chunk_ready_channel) }
 			else { panic ('this type of fractal is not supported : ${app.fractal_type}')}
 		}
 	}
@@ -172,8 +173,12 @@ fn keydown(code gg.KeyCode, mod gg.Modifier, mut app App) {
 		.enter {
 			if app.fractal_type == 'mandelbrot' {
 				app.fractal_type = 'julia'
-			} else {app.fractal_type = 'mandelbrot' }
-				spawn app.update()
+			} else if app.fractal_type == 'julia' {
+				app.fractal_type = 'burning_ship'
+			} else {
+				app.fractal_type = 'mandelbrot'
+			}
+			spawn app.update()
 		}
 		.up {
 			app.imag_part += 0.001
