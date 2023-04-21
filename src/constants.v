@@ -1,15 +1,15 @@
 const (
-	screen_width = 720
-	screen_height = 480
+	screen_width = 1920
+	screen_height = 1080
 
-	pwidth = 730
-	pheight = 480
+	pwidth = 1920
+	pheight = 1080
 
-	fullscreen = false
+	fullscreen = true
 
 	max_iterations = 1000
 
-	smooth_coloring = false
+	smooth_coloring = true
 
 	chunk_height = 2
 
@@ -17,8 +17,8 @@ const (
 	auto_zoom = false
 	auto_zoom_factor = 1.0001
 
-	auto_incr_real = true
-	auto_incr_imag = true
+	auto_incr_real = false
+	auto_incr_imag = false
 	auto_incr_factor = 0.001
 
 	// julia based fractal

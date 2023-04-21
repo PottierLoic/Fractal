@@ -192,19 +192,23 @@ fn keydown(code gg.KeyCode, mod gg.Modifier, mut app App) {
 			spawn app.update()
 		}
 		.up {
-			app.imag_part += 0.001
+			app.imag_part += 0.01
 			app.changed = true
 		}
 		.down {
-			app.imag_part -= 0.001
+			app.imag_part -= 0.01
 			app.changed = true
 		}
 		.right {
-			app.real_part += 0.001
+			app.real_part += 0.01
 			app.changed = true
 		}
 		.left {
-			app.real_part -= 0.001
+			app.real_part -= 0.01
+			app.changed = true
+		}
+		.backspace {
+			app.max_iter += 10000
 			app.changed = true
 		}
 		.space {
@@ -216,7 +220,7 @@ fn keydown(code gg.KeyCode, mod gg.Modifier, mut app App) {
 		.escape {
 			app.gg.quit()
 		}
-		else {}
+		else { println("key not supported ${code}")}
 	}
 }
 
