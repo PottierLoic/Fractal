@@ -32,6 +32,8 @@ mut:
 	ntasks  int      = runtime.nr_jobs()
 	changed bool
 	fractal_type string = 'mandelbrot'
+	color_palette int
+	palette [][]int = palettes[0]
 }
 
 struct Chunk {
@@ -50,7 +52,6 @@ fn (mut app App) update() {
 		threads.wait()
 	}
 	for t in 0 .. app.ntasks {
-		print(app.fractal_type)
 		match app.fractal_type {
 			'mandelbrot' { threads << spawn app.mandelbrot(t, chunk_channel, chunk_ready_channel) }
 			'julia' { threads << spawn app.julia(t, chunk_channel, chunk_ready_channel) }
@@ -82,6 +83,7 @@ fn (mut app App) update() {
 		}
 		
 		app.pixels, app.npixels = app.npixels, app.pixels
+		app.changed = false
 		println('${app.ntasks:2} threads; ${sw.elapsed().milliseconds():3} ms / frame; scale: ${app.scale:4}')
 		oview = cview
 		if primal_type != app.fractal_type {
@@ -106,21 +108,6 @@ fn (mut app App) zoom(zoom_factor f64) {
 	app.view.y_min = c_y - zoom_factor * d_y
 	app.view.y_max = c_y + zoom_factor * d_y
 	app.scale += if zoom_factor < 1 { 1 } else { -1 }
-}
-
-fn (mut app App) increase_iteration() {
-	app.max_iter+=5
-	app.changed = true
-}
-
-fn (mut app App) reduce_iteration() {
-	if app.max_iter > 1 {
-		app.max_iter-=5
-		app.changed = true
-	}
-	if app.max_iter < 1 {
-		app.max_iter = 1
-	}
 }
 
 fn (mut app App) center(s_x f64, s_y f64) {
@@ -172,8 +159,16 @@ fn scroll(e &gg.Event, mut app App) {
 
 fn keydown(code gg.KeyCode, mod gg.Modifier, mut app App) {
 	match code {
-		.kp_add { app.increase_iteration() }
-		.kp_subtract { app.reduce_iteration() }
+		.kp_add { 
+			app.max_iter+=5
+			app.changed = true
+		 }
+		.kp_subtract { 
+			if app.max_iter > 5 {
+				app.max_iter-=5
+				app.changed = true
+	}
+		}
 		.enter {
 			if app.fractal_type == 'mandelbrot' {
 				app.fractal_type = 'julia'
@@ -194,6 +189,12 @@ fn keydown(code gg.KeyCode, mod gg.Modifier, mut app App) {
 		}
 		.left {
 			app.real_part -= 0.001
+			app.changed = true
+		}
+		.space {
+			app.color_palette += 1
+			if app.color_palette >= palettes.len { app.color_palette = 0 }
+			app.palette = palettes[app.color_palette]
 			app.changed = true
 		}
 		else {}

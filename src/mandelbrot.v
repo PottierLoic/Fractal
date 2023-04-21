@@ -32,12 +32,12 @@ fn (mut app App) mandelbrot(id int, input chan Chunk, ready chan bool) {
 							log_zn = math.log(x*x + y*y) / 2
 							nu = math.log(log_zn/math.log(2)) / math.log(2)
 							iter += 1 - nu
-							mut color_a := palette[math.abs(int(math.floor(iter)) % palette.len)]
-							mut color_b := palette[math.abs(int(math.floor(iter + 1)) % palette.len)]
+							mut color_a := app.palette[math.abs(int(math.floor(iter)) % app.palette.len)]
+							mut color_b := app.palette[math.abs(int(math.floor(iter + 1)) % app.palette.len)]
 							r, g, b = linear_interpolation(color_a, color_b, math.abs(math.fmod(iter, 1)))
 							yrow[x_pixel] = u32(gx.rgb(u8(r), u8(g), u8(b)).abgr8())
 						} else {
-							yrow[x_pixel] = u32(gx.rgb(u8(palette[int(iter)%palette.len][0]), u8(palette[int(iter)%palette.len][1]), u8(palette[int(iter)%palette.len][2])).abgr8())
+							yrow[x_pixel] = u32(gx.rgb(u8(app.palette[int(iter)%app.palette.len][0]), u8(app.palette[int(iter)%app.palette.len][1]), u8(app.palette[int(iter)%app.palette.len][2])).abgr8())
 						}
 					}
 				}
