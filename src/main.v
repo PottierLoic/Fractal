@@ -27,9 +27,11 @@ mut:
 	view    ViewRect = ViewRect{-3.55, 3.55, -2, 2}
 	scale   int      = 1
 	max_iter int 	 = max_iterations
+	real_part f64	 = real_part
+	imag_part f64	 = imag_part
 	ntasks  int      = runtime.nr_jobs()
-	changed_iter bool
-	fractal_type string = 'julia'
+	changed bool
+	fractal_type string = 'mandelbrot'
 }
 
 struct Chunk {
@@ -60,7 +62,7 @@ fn (mut app App) update() {
 	for {
 		sw.restart()
 		cview := app.view
-		if oview == cview && app.changed_iter == false{
+		if oview == cview && app.changed == false{
 			time.sleep(5 * time.millisecond)
 			continue
 		}
@@ -108,13 +110,13 @@ fn (mut app App) zoom(zoom_factor f64) {
 
 fn (mut app App) increase_iteration() {
 	app.max_iter+=5
-	app.changed_iter = true
+	app.changed = true
 }
 
 fn (mut app App) reduce_iteration() {
 	if app.max_iter > 1 {
 		app.max_iter-=5
-		app.changed_iter = true
+		app.changed = true
 	}
 	if app.max_iter < 1 {
 		app.max_iter = 1
@@ -169,15 +171,32 @@ fn scroll(e &gg.Event, mut app App) {
 }
 
 fn keydown(code gg.KeyCode, mod gg.Modifier, mut app App) {
-	if code == gg.KeyCode.kp_add {
-		app.increase_iteration()
-	} else if code == gg.KeyCode.kp_subtract {
-		app.reduce_iteration()
-	} else if code == gg.KeyCode.enter {
-		if app.fractal_type == 'mandelbrot' {
-			app.fractal_type = 'julia'
-		} else {app.fractal_type = 'mandelbrot' }
-		spawn app.update()
+	match code {
+		.kp_add { app.increase_iteration() }
+		.kp_subtract { app.reduce_iteration() }
+		.enter {
+			if app.fractal_type == 'mandelbrot' {
+				app.fractal_type = 'julia'
+			} else {app.fractal_type = 'mandelbrot' }
+				spawn app.update()
+		}
+		.up {
+			app.imag_part += 0.001
+			app.changed = true
+		}
+		.down {
+			app.imag_part -= 0.001
+			app.changed = true
+		}
+		.right {
+			app.real_part += 0.001
+			app.changed = true
+		}
+		.left {
+			app.real_part -= 0.001
+			app.changed = true
+		}
+		else {}
 	}
 }
 
