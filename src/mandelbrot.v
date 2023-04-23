@@ -26,7 +26,7 @@ fn (mut app App) mandelbrot(id int, input chan Chunk, ready chan bool) {
 				}
 				unsafe {
 					if iter >= app.max_iter {
-						yrow[x_pixel] = u32(gx.black.abgr8())
+						yrow[x_pixel] = black
 					} else {
 						if smooth_coloring == true {
 							log_zn = math.log(x*x + y*y) / 2

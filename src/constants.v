@@ -1,3 +1,5 @@
+import gx
+
 const (
 	screen_width = 1920
 	screen_height = 1080
@@ -5,16 +7,16 @@ const (
 	pwidth = 1920
 	pheight = 1080
 
-	fullscreen = false
+	fullscreen = true
 
 	max_iterations = 1000
 
-	smooth_coloring = true
+	smooth_coloring = false
 
 	chunk_height = 2
 
 	zoom_factor = 1.1
-	auto_zoom = true
+	auto_zoom = false
 	auto_zoom_factor = 1.001
 
 	auto_incr_real = true
@@ -27,8 +29,11 @@ const (
 	real_part = 0 
 	imag_part = 0 
 
+	// Colors
+	black = u32(gx.black.abgr8())
+
 	// wikipedia palette
-	palette1 = generate_palette_n([[0, 7, 100], [32, 107, 203], [237, 255, 255], [255, 170, 0], [0, 2, 0]], 5)
+	palette1 = generate_palette_n([[0, 7, 100], [32, 107, 203], [237, 255, 255], [255, 170, 0], [0, 2, 0], [0, 7, 100]], 6)
 	
 	// sun
 	palette2 = generate_palette_n([[255, 255, 255], [255, 255, 0], [255, 0, 0], [255, 255, 255]], 5)
