@@ -11,7 +11,7 @@ const (
 
 	max_iterations = 100
 
-	smooth_coloring = false
+	smooth_coloring = true
 
 	chunk_height = 2
 

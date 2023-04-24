@@ -1,9 +1,11 @@
 import math
-import gx
 
-
-fn linear_interpolation(color_a u32, color_b u32, ratio f64) u32 {
-	return u32((color_b - color_a) * ratio + color_a)
+// used to do a smooth color transition between two colors
+fn linear_interpolation(color_a []int, color_b []int, ratio f64) (int, int, int) {
+	mut r := int(math.floor(color_b[0] - color_a[0]) * ratio + color_a[0])
+	mut g := int(math.floor(color_b[1] - color_a[1]) * ratio + color_a[1])
+	mut b := int(math.floor(color_b[2] - color_a[2]) * ratio + color_a[2])
+	return r, g, b
 }
 
 // add steps to the palette
@@ -25,17 +27,11 @@ fn generate_palette(list [][]int) [][]int {
 }
 
 // just call generate_palette n times
-fn generate_palette_n(list [][]int, iter int) []u32 {
+fn generate_palette_n(list [][]int, iter int) [][]int {
 	mut new_palette := list.clone()
 	for i := 0; i < iter; i++ {
 		new_palette = generate_palette(new_palette)
 	}
-
-	mut u32_pal := []u32
-	for rgb in new_palette {
-		u32_pal << u32(gx.rgb(u8(rgb[0]), u8(rgb[1]), u8(rgb[2])).abgr8())
-	}
-
-	return u32_pal
+	return new_palette
 }
 

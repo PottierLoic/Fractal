@@ -33,7 +33,7 @@ mut:
 	changed bool
 	fractal_type string = 'mandelbrot'
 	color_palette int
-	palette []u32 = palettes[0]
+	palette [][]int = palettes[0]
 }
 
 struct Chunk {
