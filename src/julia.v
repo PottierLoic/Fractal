@@ -30,7 +30,7 @@ fn (mut app App) julia(id int, input chan Chunk, ready chan bool) {
 				}
 				unsafe {
 					if iter >= app.max_iter {
-						yrow[x_pixel] = u32(gx.black.abgr8())
+						yrow[x_pixel] = black
 					} else {
 						yrow[x_pixel] = u32(gx.rgb(u8(app.palette[int(iter)%app.palette.len][0]), u8(app.palette[int(iter)%app.palette.len][1]), u8(app.palette[int(iter)%app.palette.len][2])).abgr8())
 						if smooth_coloring == true {

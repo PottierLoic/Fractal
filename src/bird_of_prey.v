@@ -1,7 +1,7 @@
 import math
 import gx
 
-fn (mut app App) burning_ship(id int, input chan Chunk, ready chan bool) {
+fn (mut app App) bird_of_prey(id int, input chan Chunk, ready chan bool) {
 	for {
 		chunk := <-input or { break }
 		yscale := chunk.cview.height() / pheight
@@ -20,10 +20,10 @@ fn (mut app App) burning_ship(id int, input chan Chunk, ready chan bool) {
 				x, y = 0.0, 0.0
 				for iter = 0; iter < app.max_iter; iter++ {
 					// once issue with abs swapping is resolved, uncomment following line and delete until if
-					// x, y = x* x - y * y + x0, math.abs(2 * x * y) * y0
-					tempx := x
-					x = x * x - y * y + x0
-					y = math.abs(2 * tempx * y) + y0
+					// x, y = (x * x - (y * y * 3)) * math.abs(x) + x0, ((x * x * 3) - y * y) * math.abs(y) + y0
+					tmp := x
+					x = (x * x - (y * y * 3)) * math.abs(x) + x0
+					y = ((tmp * tmp * 3) - y * y) * math.abs(y) + y0
 					if x * x + y * y > 100 {
 						break
 					}

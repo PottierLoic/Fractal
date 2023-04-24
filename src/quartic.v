@@ -1,7 +1,7 @@
 import math
 import gx
 
-fn (mut app App) burning_ship(id int, input chan Chunk, ready chan bool) {
+fn (mut app App) quartic(id int, input chan Chunk, ready chan bool) {
 	for {
 		chunk := <-input or { break }
 		yscale := chunk.cview.height() / pheight
@@ -19,11 +19,9 @@ fn (mut app App) burning_ship(id int, input chan Chunk, ready chan bool) {
 				x0 += xscale
 				x, y = 0.0, 0.0
 				for iter = 0; iter < app.max_iter; iter++ {
-					// once issue with abs swapping is resolved, uncomment following line and delete until if
-					// x, y = x* x - y * y + x0, math.abs(2 * x * y) * y0
-					tempx := x
-					x = x * x - y * y + x0
-					y = math.abs(2 * tempx * y) + y0
+					tmp := x
+					x = math.abs(x * x * x * x) - 6 * math.abs(x * x) * math.abs(y * y) + math.abs(y * y * y * y) + x0
+					y = 4 * math.abs(tmp * tmp * tmp * y)- 4 * math.abs(tmp * y * y * y) + y0
 					if x * x + y * y > 100 {
 						break
 					}
