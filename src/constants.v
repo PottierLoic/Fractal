@@ -1,15 +1,15 @@
 import gx
 
 const (
-	screen_width = 400
-	screen_height = 400
+	screen_width = 1920	
+	screen_height = 1080
 
-	pwidth = 400
-	pheight = 400
+	pwidth = 1920
+	pheight = 1080
 
-	fullscreen = false
+	fullscreen = true
 
-	max_iterations = 100
+	max_iterations = 1000
 
 	smooth_coloring = true
 

@@ -84,7 +84,7 @@ fn (mut app App) update() {
 		for _ in 0 .. nchunks {
 			_ := <-chunk_ready_channel
 		}
-		
+
 		app.pixels, app.npixels = app.npixels, app.pixels
 		app.changed = false
 		println('${app.ntasks:2} threads; ${sw.elapsed().milliseconds():3} ms / frame; scale: ${app.scale:4}')
@@ -98,12 +98,13 @@ fn (mut app App) update() {
 
 fn (mut app App) draw() {
 	mut istream_image := app.gg.get_cached_image_by_idx(app.iidx)
-	istream_image.update_pixel_data(app.pixels)
+	istream_image.update_pixel_data(unsafe{ &u8(app.pixels) })
 	size := gg.window_size()
 	app.gg.draw_image(0, 0, size.width, size.height, istream_image)
 }
 
 fn (mut app App) zoom(zoom_factor f64) {
+	println('zooming ${zoom_factor}')
 	c_x, c_y := (app.view.x_max + app.view.x_min) / 2, (app.view.y_max + app.view.y_min) / 2
 	d_x, d_y := c_x - app.view.x_min, c_y - app.view.y_min
 	app.view.x_min = c_x - zoom_factor * d_x
@@ -141,7 +142,7 @@ fn frame(mut app App) {
 			app.changed = true
 		}
 	}
-	
+
 	app.draw()
 	app.gg.end()
 }
@@ -173,11 +174,11 @@ fn scroll(e &gg.Event, mut app App) {
 
 fn keydown(code gg.KeyCode, mod gg.Modifier, mut app App) {
 	match code {
-		.kp_add { 
+		.kp_add {
 			app.max_iter+=5
 			app.changed = true
 		 }
-		.kp_subtract { 
+		.kp_subtract {
 			if app.max_iter > 5 {
 				app.max_iter-=5
 				app.changed = true
@@ -221,6 +222,13 @@ fn keydown(code gg.KeyCode, mod gg.Modifier, mut app App) {
 		}
 		.escape {
 			app.gg.quit()
+		}
+		// zoom in/out
+		.w {
+			app.zoom(1 / zoom_factor)
+		}
+		.s {
+			app.zoom(zoom_factor)
 		}
 		else { println("key not supported ${code}")}
 	}
