@@ -22,8 +22,12 @@ void FractalRenderer::run() {
   }
 }
 
-void FractalRenderer::changeShader(const std::string& newShaderPath) {
-  if (!shader.loadFromFile(newShaderPath, sf::Shader::Fragment)) {
+  void changeConfig(const std::string& shaderPath, const int iteration, const int colorPalette, const bool smoothState) {
+    // TODO: Implement this and delete bellow 
+  }
+
+void FractalRenderer::changeShader(const std::string& shaderPath) {
+  if (!shader.loadFromFile(shaderPath, sf::Shader::Fragment)) {
     std::cerr << "Error while loading new shader." << std::endl;
   }
 }

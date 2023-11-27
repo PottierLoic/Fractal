@@ -29,10 +29,6 @@ int main() {
   int palette = 0;
   bool smooth = true;
 
-  sf::Color testColor = PALETTE_BLACK_WHITE.getColor(0.5);
-  std::cout << static_cast<unsigned>(testColor.r) << ","
-          << static_cast<unsigned>(testColor.g) << ","
-          << static_cast<unsigned>(testColor.b) << std::endl;
   while (window.isOpen()) {
     sf::Event event;
     while (window.pollEvent(event)) {
@@ -61,7 +57,7 @@ int main() {
     ImGui::End();
 
     if (configChanged) {
-      debugDifference(fractalType, iterations, palette, smooth);
+      //debugDifference(fractalType, iterations, palette, smooth);
     }
 
     // Rendering

@@ -10,10 +10,14 @@ class FractalRenderer {
 public:
   FractalRenderer(const std::string& shaderPath);
   void run();
-  void changeShader(const std::string& newShaderPath);
-
+  void changeConfig(const std::string& shaderPath, const int iteration, const int colorPalette, const bool smoothState)
 
 private:
+  int fractalType = 0;
+  int maxIterations = 100;
+  int colorPalette = 0;
+  bool smooth = true;
+
   void handleEvents();
   void render();
 
