@@ -2,7 +2,7 @@
 
 uniform vec2 resolution;
 uniform float time;
-uniform maxIterations;
+uniform int maxIterations;
 
 out vec4 FragColor;
 
@@ -15,8 +15,8 @@ void main() {
   int iterations = 0;
 
   while (iterations < maxIterations && length(z) < 4.0) {
-    z = vec2(z.x * z.x - z.y * z.y, 2.0 * z.x * z.y) + mandelbrotCoord;
-    iterations++;
+      z = vec2(z.x * z.x - z.y * z.y, 2.0 * z.x * z.y) + mandelbrotCoord;
+      iterations++;
   }
 
   float color = float(iterations) / float(maxIterations);
