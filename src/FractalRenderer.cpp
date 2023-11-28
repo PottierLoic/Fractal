@@ -15,7 +15,40 @@ FractalRenderer::FractalRenderer(sf::RenderWindow& window) : window(window) {
 }
 
 void FractalRenderer::changeConfig() {
+  if (type != oldType) { changeShader(); }
+  if (maxIterations != oldMaxIteration) { changeIterations(); }
+  if (position != oldPosition) { changePosition(); }
+  if (paletteType != oldPaletteType) { changeColorPalette(); }
+  if (colorRepetition != oldColorRepetition) { changeColorRepetition(); }
+}
+
+void FractalRenderer::changeShader() {
+  oldType = type;
+  if (!shader.loadFromFile(SHADERS_PATH[type], sf::Shader::Fragment)) {
+    std::cerr << "Error loading shader." << std::endl;
+    std::exit(EXIT_FAILURE);
+  }
+}
+
+void FractalRenderer::changeIterations() {
+  oldMaxIteration = maxIterations;
   shader.setUniform("maxIterations", maxIterations);
+}
+
+void FractalRenderer::changePosition() {
+  oldPosition = position;
+  shader.setUniform("position", position);
+}
+
+void FractalRenderer::changeColorPalette() {
+  oldPaletteType = paletteType;
+  colorPalette = PALETTES[paletteType];
+  // should set uniform
+}
+
+void FractalRenderer::changeColorRepetition() {
+  oldColorRepetition = colorRepetition;
+  // should set uniform
 }
 
 void FractalRenderer::render() {
