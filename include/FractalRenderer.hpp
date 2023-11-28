@@ -14,7 +14,7 @@ const std::vector<const char*> FRACTAL_NAMES = {
   "Burning Ship"
 };
 
-const std::vector<const char*> SHADERS_PATH = {
+const std::vector<std::string> SHADERS_PATH = {
   "../shaders/mandelbrot.glsl",
   "../shaders/julia.glsl",
   "../shaders/burningship.glsl"
@@ -36,15 +36,17 @@ public:
   int type = 0;
   int maxIterations = 100;
   sf::Vector2f position = sf::Vector2f(0.0f, 0.0f);
+  float zoom = 0.5f;
   int paletteType = 0;
-  int colorRepetition = 1;
+  float colorRepetition = 1;
 
   /* Renderer old config. */
   int oldType = 0;
   int oldMaxIteration = 100;
-  sf::Vector2f oldPosition = sf::Vector2f(0.0f, 0.0f);
+  sf::Vector2f oldPosition = sf::Vector2f(-0.5f, 0.0f);
+  float oldZoom = 0.5f;
   int oldPaletteType = 0;
-  int oldColorRepetition = 1;
+  float oldColorRepetition = 1;
 
   /* Main constructor. */
   FractalRenderer(sf::RenderWindow& windows);
@@ -53,6 +55,7 @@ public:
   void changeShader();
   void changeIterations();
   void changePosition();
+  void changeZoom();
   void changeColorPalette();
   void changeColorRepetition();
 

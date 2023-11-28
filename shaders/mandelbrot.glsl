@@ -1,25 +1,25 @@
-#version 330 core
+#version 400 core
 
 uniform vec2 resolution;
 uniform float time;
 uniform int maxIterations;
+uniform vec2 position;
+uniform float zoom;
 
 out vec4 FragColor;
 
 void main() {
   vec2 uv = gl_FragCoord.xy / resolution.xy;
 
-  // TODO: Should try this and see the fractal placement
-  // vec2 madelbrotCoord = uv
+  // more computation time caused by dvec2
+  dvec2 mandelbrotCoord = (dvec2(uv) - 0.5) * dvec2(3.5 / zoom, 2.0 / zoom) + position;
 
-  // TODO: To test better pricision, simply replacing vec2 with dvec2 for mandelbrotCoord and z may be enought
-  vec2 mandelbrotCoord = vec2(uv.x * 3.5 - 2.5, uv.y * 2.0 - 1.0);
 
-  vec2 z = mandelbrotCoord;
+  dvec2 z = mandelbrotCoord;
   int iterations = 0;
 
   while (iterations < maxIterations && length(z) < 4.0) {
-    z = vec2(z.x * z.x - z.y * z.y, 2.0 * z.x * z.y) + mandelbrotCoord;
+    z = dvec2(z.x * z.x - z.y * z.y, 2.0 * z.x * z.y) + mandelbrotCoord;
     iterations++;
   }
 
