@@ -9,11 +9,10 @@ uniform float zoom;
 out vec4 FragColor;
 
 void main() {
-  vec2 uv = gl_FragCoord.xy / resolution.xy;
+  dvec2 uv = gl_FragCoord.xy / resolution.xy;
 
   // more computation time caused by dvec2
   dvec2 mandelbrotCoord = (dvec2(uv) - 0.5) * dvec2(3.5 / zoom, 2.0 / zoom) + position;
-
 
   dvec2 z = mandelbrotCoord;
   int iterations = 0;

@@ -19,15 +19,6 @@ int main() {
 
   sf::Clock deltaClock;
 
-  // /* DEBUG ----------------*/
-  // int type = 0;
-  // int maxIter = 100;
-  // sf::Vector2f position = sf::Vector2f(0.0f, 0.0f);
-  // float zoom = 1.0f;
-  // int palette = 0;
-  // float repetition = 1;
-  // /* DEBUG ----------------*/
-
   bool ui = true;
 
   while (window.isOpen()) {
