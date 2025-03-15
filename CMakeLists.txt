@@ -6,17 +6,20 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(external/glfw)
 
-include_directories(external/glm)
-
 set(GLAD_DIR external/glad)
-set(GLAD_SOURCES ${GLAD_DIR}/src/glad.c)
+set(IMGUI_DIR external/imgui)
 
 set(SOURCES
     src/main.cpp
     src/FractalSimulator.cpp
+    src/WindowManager.cpp
+    src/Renderer.cpp
+    src/Camera.cpp
+    src/ShaderLoader.cpp
 )
 
-set(IMGUI_DIR external/imgui)
+set(GLAD_SOURCES ${GLAD_DIR}/src/glad.c)
+
 set(IMGUI_SOURCES
     ${IMGUI_DIR}/imgui.cpp
     ${IMGUI_DIR}/imgui_draw.cpp
@@ -26,15 +29,21 @@ set(IMGUI_SOURCES
     ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
 )
 
-add_executable(${PROJECT_NAME} ${SOURCES} ${IMGUI_SOURCES} ${GLAD_SOURCES})
+add_executable(${PROJECT_NAME} ${SOURCES} ${GLAD_SOURCES} ${IMGUI_SOURCES})
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-    src
+    include
     external/glfw/include
-    ${IMGUI_DIR}
     ${GLAD_DIR}/include
+    ${IMGUI_DIR}
+    ${IMGUI_DIR}/backends
+    external/glm
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE glfw)
+find_package(OpenGL REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    OpenGL::GL
+    glfw
+)
 
-file(COPY ${CMAKE_SOURCE_DIR}/src/shaders DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY ${CMAKE_SOURCE_DIR}/shaders DESTINATION ${CMAKE_BINARY_DIR})
