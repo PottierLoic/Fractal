@@ -37,9 +37,6 @@ void Camera::handleScroll(GLFWwindow* window, double xoffset, double yoffset) {
   double zoomFactor = (yoffset > 0 ? 0.9 : 1.1);
   scale *= zoomFactor;
   center = mouseWorld - (mouseNorm - 0.5) * scale * glm::dvec2(aspect, 1.0);
-  std::cout << "MouseNorm: (" << mouseNorm.x << ", " << mouseNorm.y << ")\n";
-  std::cout << "MouseWorld: (" << mouseWorld.x << ", " << mouseWorld.y << ")\n";
-  std::cout << "Scale: " << scale << " Center: (" << center.x << ", " << center.y << ")\n";
 }
 
 glm::dvec2 Camera::getMouseWorld(GLFWwindow* window) const {

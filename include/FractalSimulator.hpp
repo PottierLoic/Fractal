@@ -10,6 +10,10 @@
 #include <backends/imgui_impl_opengl3.h>
 #include <iostream>
 #include <glm/glm.hpp>
+#include <memory>
+#include "Fractal.hpp"
+#include "MandelbrotFractal.hpp"
+#include "JuliaFractal.hpp"
 
 class FractalSimulator {
 public:
@@ -19,6 +23,7 @@ private:
   static void scrollCallback(GLFWwindow* window, double xoffset, double yoffset);
   void initImGui();
   void renderUI();
+  void updateShaderProgram();
 
   WindowManager windowManager;
   Renderer renderer;
@@ -26,6 +31,10 @@ private:
   GLuint shaderProgram;
   int maxIterations;
   glm::vec3 paletteColors[4];
+  std::unique_ptr<Fractal> currentFractal;
+  int selectedFractalType;
+  double cReal;
+  double cImag;
 };
 
 #endif
