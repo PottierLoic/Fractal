@@ -1,38 +1,40 @@
-cmake_minimum_required(VERSION 3.5...3.27)
-set(CMAKE_WARN_DEPRECATED OFF CACHE BOOL "" FORCE)
+cmake_minimum_required(VERSION 3.10)
+project(FractalSimulator)
 
-project(app
-  LANGUAGES CXX
-  VERSION 1.0
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+add_subdirectory(external/glfw)
+
+include_directories(external/glm)
+
+set(GLAD_DIR external/glad)
+set(GLAD_SOURCES ${GLAD_DIR}/src/glad.c)
+
+set(SOURCES
+    src/main.cpp
+    src/FractalSimulator.cpp
 )
 
-file(
-  GLOB_RECURSE HEADER_LIST
-  CONFIGURE_DEPENDS
-  "${PROJECT_SOURCE_DIR}/include/*.hpp"
+set(IMGUI_DIR external/imgui)
+set(IMGUI_SOURCES
+    ${IMGUI_DIR}/imgui.cpp
+    ${IMGUI_DIR}/imgui_draw.cpp
+    ${IMGUI_DIR}/imgui_widgets.cpp
+    ${IMGUI_DIR}/imgui_tables.cpp
+    ${IMGUI_DIR}/backends/imgui_impl_glfw.cpp
+    ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
 )
 
-file(
-  GLOB_RECURSE SOURCE_LIST
-  CONFIGURE_DEPENDS
-  "${PROJECT_SOURCE_DIR}/src/*.cpp"
+add_executable(${PROJECT_NAME} ${SOURCES} ${IMGUI_SOURCES} ${GLAD_SOURCES})
+
+target_include_directories(${PROJECT_NAME} PRIVATE
+    src
+    external/glfw/include
+    ${IMGUI_DIR}
+    ${GLAD_DIR}/include
 )
 
-add_executable(${PROJECT_NAME} ${SOURCE_LIST} ${HEADER_LIST})
+target_link_libraries(${PROJECT_NAME} PRIVATE glfw)
 
-target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include)
-
-find_program(CCACHE_FOUND ccache)
-if(CCACHE_FOUND)
-  set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
-endif(CCACHE_FOUND)
-
-add_subdirectory(dependencies)
-
-target_link_libraries(${PROJECT_NAME} PRIVATE ImGui-SFML::ImGui-SFML)
-
-if(FLAGS STREQUAL "--debug")
-  target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra)
-else()
-  target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Werror)
-endif()
+file(COPY ${CMAKE_SOURCE_DIR}/src/shaders DESTINATION ${CMAKE_BINARY_DIR})
