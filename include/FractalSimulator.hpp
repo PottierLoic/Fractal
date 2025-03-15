@@ -9,6 +9,7 @@
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
 #include <iostream>
+#include <glm/glm.hpp>
 
 class FractalSimulator {
 public:
@@ -24,6 +25,7 @@ private:
   Camera camera;
   GLuint shaderProgram;
   int maxIterations;
+  glm::vec3 paletteColors[4];
 };
 
 #endif

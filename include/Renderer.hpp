@@ -11,7 +11,7 @@ class Renderer {
 public:
   Renderer();
   ~Renderer();
-  void render(GLuint shaderProgram, const glm::vec2& center, float scale, int width, int height);
+  void render(GLuint shaderProgram, const glm::dvec2& center, double scale, int width, int height);
 private:
   GLuint vao, vbo;
 };

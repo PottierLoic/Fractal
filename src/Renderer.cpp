@@ -22,14 +22,14 @@ Renderer::~Renderer() {
   glDeleteBuffers(1, &vbo);
 }
 
-void Renderer::render(GLuint shaderProgram, const glm::vec2& center, float scale, int width, int height) {
+void Renderer::render(GLuint shaderProgram, const glm::dvec2& center, double scale, int width, int height) {
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
   glViewport(0, 0, width, height);
 
   glUseProgram(shaderProgram);
-  glUniform2fv(glGetUniformLocation(shaderProgram, "center"), 1, glm::value_ptr(center));
-  glUniform1f(glGetUniformLocation(shaderProgram, "scale"), scale);
+  glUniform2dv(glGetUniformLocation(shaderProgram, "center"), 1, glm::value_ptr(center));
+  glUniform1d(glGetUniformLocation(shaderProgram, "scale"), scale);
   glUniform2f(glGetUniformLocation(shaderProgram, "resolution"), (float)width, (float)height);
   glBindVertexArray(vao);
   glDrawArrays(GL_TRIANGLES, 0, 6);

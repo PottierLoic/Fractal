@@ -10,14 +10,14 @@ public:
   Camera();
   void update(GLFWwindow* window);
   void handleScroll(GLFWwindow* window, double xoffset, double yoffset);
-  glm::vec2 getCenter() const { return center; }
-  float getScale() const { return scale; }
-  glm::vec2 getMouseWorld(GLFWwindow* window) const;
+  glm::dvec2 getCenter() const { return center; }
+  double getScale() const { return scale; }
+  glm::dvec2 getMouseWorld(GLFWwindow* window) const;
 private:
-  glm::vec2 center;
-  float scale;
+  glm::dvec2 center;
+  double scale;
   bool isDragging;
-  glm::vec2 lastMousePos;
+  glm::dvec2 lastMousePos;
 };
 
 #endif

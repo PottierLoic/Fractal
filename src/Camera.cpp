@@ -9,17 +9,17 @@ void Camera::update(GLFWwindow* window) {
       isDragging = true;
       double xpos, ypos;
       glfwGetCursorPos(window, &xpos, &ypos);
-      lastMousePos = glm::vec2(xpos, ypos);
+      lastMousePos = glm::dvec2(xpos, ypos);
     } else {
       double xpos, ypos;
       glfwGetCursorPos(window, &xpos, &ypos);
-      glm::vec2 currentPos(xpos, ypos);
-      glm::vec2 delta = currentPos - lastMousePos;
+      glm::dvec2 currentPos(xpos, ypos);
+      glm::dvec2 delta = currentPos - lastMousePos;
       lastMousePos = currentPos;
       int width, height;
       glfwGetFramebufferSize(window, &width, &height);
-      float aspect = (float)width / (float)height;
-      center += glm::vec2(-delta.x / (float)width, delta.y / (float)height) * scale * glm::vec2(aspect, 1.0f);
+      double aspect = (double)width / (double)height;
+      center += glm::dvec2(-delta.x / (double)width, delta.y / (double)height) * scale * glm::dvec2(aspect, 1.0);
     }
   } else {
     isDragging = false;
@@ -31,23 +31,23 @@ void Camera::handleScroll(GLFWwindow* window, double xoffset, double yoffset) {
   glfwGetCursorPos(window, &xpos, &ypos);
   int width, height;
   glfwGetFramebufferSize(window, &width, &height);
-  float aspect = (float)width / (float)height;
-  glm::vec2 mouseNorm = glm::vec2(xpos / width, 1.0 - ypos / height);
-  glm::vec2 mouseWorld = center + (mouseNorm - 0.5f) * scale * glm::vec2(aspect, 1.0f);
-  float zoomFactor = (yoffset > 0 ? 0.9f : 1.1f);
+  double aspect = (double)width / (double)height;
+  glm::dvec2 mouseNorm = glm::dvec2(xpos / width, 1.0 - ypos / height);
+  glm::dvec2 mouseWorld = center + (mouseNorm - 0.5) * scale * glm::dvec2(aspect, 1.0);
+  double zoomFactor = (yoffset > 0 ? 0.9 : 1.1);
   scale *= zoomFactor;
-  center = mouseWorld - (mouseNorm - 0.5f) * scale * glm::vec2(aspect, 1.0f);
+  center = mouseWorld - (mouseNorm - 0.5) * scale * glm::dvec2(aspect, 1.0);
   std::cout << "MouseNorm: (" << mouseNorm.x << ", " << mouseNorm.y << ")\n";
   std::cout << "MouseWorld: (" << mouseWorld.x << ", " << mouseWorld.y << ")\n";
   std::cout << "Scale: " << scale << " Center: (" << center.x << ", " << center.y << ")\n";
 }
 
-glm::vec2 Camera::getMouseWorld(GLFWwindow* window) const {
+glm::dvec2 Camera::getMouseWorld(GLFWwindow* window) const {
   double xpos, ypos;
   glfwGetCursorPos(window, &xpos, &ypos);
   int width, height;
   glfwGetFramebufferSize(window, &width, &height);
-  float aspect = (float)width / (float)height;
-  glm::vec2 mouseNorm = glm::vec2(xpos / width, 1.0 - ypos / height);
-  return center + (mouseNorm - 0.5f) * scale * glm::vec2(aspect, 1.0f);
+  double aspect = (double)width / (double)height;
+  glm::dvec2 mouseNorm = glm::dvec2(xpos / width, 1.0 - ypos / height);
+  return center + (mouseNorm - 0.5) * scale * glm::dvec2(aspect, 1.0);
 }
